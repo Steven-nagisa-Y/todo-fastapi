@@ -1,10 +1,18 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
+FROM python:3.9.7-alpine3.14 as Base
 
-# Adjust the time
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+EXPOSE 8000
 
-# Copy files to target file.
-COPY ./ /app
+WORKDIR ./
 
-# Install library
-RUN pip3 install -r requirements.txt
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+  apk add nodejs
+
+COPY requirements.txt requirements.txt
+
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+  pip install --upgrade pip && \
+  pip install --no-cache-dir --upgrade -r requirements.txt
+
+COPY . .
+
+CMD [ "uvicorn" ,"main:app","--host", "0.0.0.0"]
