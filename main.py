@@ -138,6 +138,9 @@ async def get_todo(user_name: str, type: str, id: str, response: Response):
     if not old_todo:
         return {
             "status": "err",
+            "data": {
+                "id": id
+            },
             "errMsg": "此条Todo不存在，ID: " + id
         }
     if old_todo[0]['name'] != user_name:
