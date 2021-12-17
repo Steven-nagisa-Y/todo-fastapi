@@ -106,6 +106,7 @@ class Todo:
         :param todo_id: to-do的ID
         :return:
         """
+        tb_todo = self.db.table(table)
         return tb_todo.search(self.q['id'] == todo_id)
 
     def store(self,
