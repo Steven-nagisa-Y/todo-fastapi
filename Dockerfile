@@ -4,8 +4,7 @@ EXPOSE 8000
 
 WORKDIR ./
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-  apk add nodejs
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g'
 
 COPY requirements.txt requirements.txt
 
